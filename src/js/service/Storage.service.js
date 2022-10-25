@@ -4,7 +4,7 @@
  * @returns recupère du SessionStorage la clé saisi
  */
 export function getFromSessionStorage(key) {
-    const data = JSON.parse(JSON.parse(sessionStorage.getItem(key)));
+    const data = JSON.parse(sessionStorage.getItem(key));
     return data;
 }
 
@@ -34,7 +34,7 @@ export function setToSessionStorage(key, data) {
  * @returns recupère du localStorage la clé saisi
  */
  export function getFromLocalStorage(key) {
-    const data = JSON.parse(JSON.parse(localStorage.getItem(key)));
+    const data = JSON.parse(localStorage.getItem(key));
     return data;
 }
 
