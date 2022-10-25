@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/css/index.css">
+    <link rel="stylesheet" href="./src/css/cyberpunk.css">
+    <link rel="stylesheet" href="./src/css/main.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous" defer></script>
+    <script src="./src/js/signUp.js" type="module" defer></script>
+    <title>Bug Tracker</title>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <img src="./src/assets/logo.png" alt="logo"  />
+            <h1  class="cyberpunk glitched">Bienvenue sur Bug Tracker</h1>
+            <div class="formContainer">
+                <h2 class="cyberpunk">INSCRIPTION</h2>
+                <span class="errorMessage">ERREUR</span>
+                <div id="successContainer">
+                    <span class="successMessage" id="successMessage" >INSCRIPTION RÉUSSIE</span>
+                    <h4 class="cyberpunk" >Vous allez être redirigé vers la page d'accueil.</h4>
+                </div>
+
+                <section class="cyberpunk">
+                    <form style="max-width: 500px">
+                        <input class="cyberpunk" type="text" id="username"  placeholder="Nom d'utilisateur"/>
+                        <input class="cyberpunk" type="password" id="password" placeholder="Mot de passe"/>
+                        <div id="passwordRequirements">
+                            <h4 class="cyberpunk">Le mot de passe doit contenir les éléments suivants</h4>
+                            <ul class="cyberpunk">
+                                <li id="letter" class="glitched">Une lettre miniscule.</li>
+                                <li id="capital" class="glitched">Une lettre majuscule.</li>
+                                <li id="number" class="glitched">Un chiffre.</li>
+                                <li id="length" class="glitched">Un minimum de 8 caractères.</li>
+                            </ul>
+                        </div>
+                        <input class="cyberpunk" type="password" id="passwordValidation" placeholder="Confirmer le mot de passe"/>
+                        <div class="signInBtnContainer">
+                            <button>S'inscrire</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -35,11 +35,22 @@ header .menuItem {
     max-width: 335px;
     width: auto;
 }
+#successContainer,
+.errorMessage{
+  display: none;
+}
 
-.menuItem a{
+.menuItem a,
+.successMessage,
+.errorMessage{
   padding: 5px 40px;
 }
 
+
+.successMessage,
+.successMessage::after,
+.errorMessage,
+.errorMessage::after,
 .deleteBtnContainer a,
 .deleteBtnContainer a::after,
 .menuItem a, 
@@ -55,7 +66,9 @@ header .menuItem {
     position: relative;
     cursor: pointer;
 }
- 
+
+.successMessage:after,
+.errorMessage:after,
 .deleteBtnContainer a::after,
 .menuItem a::after {
     --slice-0: inset(50% 50% 50% 50%);
@@ -77,10 +90,48 @@ header .menuItem {
     clip-path: var(--slice-0);
 }
 
+
+.errorMessage, 
+.errorMessage::after, 
+.deleteBtnContainer a,
+.deleteBtnContainer a::after{
+  background: linear-gradient(45deg, transparent 5%, #FF013C 5%);
+}
+
+.successMessage,
+.successMessage::after{
+  background: linear-gradient(45deg, transparent 5%, #8ae66e 5%);
+}
+
+.errorMessage::after, 
+.deleteBtnContainer a::after {
+    background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #FF013C 5%);
+    text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
+}
+
+.successMessage::after{
+  background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #8ae66e 5%);
+  text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
+  content: 'INSCRIPTION RÉUSSIE';
+}
+
+.errorMessage:after,
+.deleteBtnContainer a::after{
+  content: 'ERREUR';
+
+}
+
+.successMessage:hover::after, 
+.errorMessage:hover::after, 
 .deleteBtnContainer a:hover::after,
 .menuItem a:hover::after {
     animation: 1s glitch;
     animation-timing-function: steps(2, end);
+}
+
+.successMessage::after, 
+.errorMessage::after{
+  animation: 500ms glitch infinite;
 }
   
 @keyframes glitch {
