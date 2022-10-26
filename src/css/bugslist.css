@@ -1,4 +1,5 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 section.tableSection{
   padding: 20px 0!important;
@@ -26,9 +27,11 @@ td {
 }
 td:before {
   content: attr(data-title);
-  color: #7a91aa;
+  color: purple;
   text-transform: uppercase;
-  font-size: 1.4rem;
+  font-family: 'Bebas Neue', cursive;
+  font-weight: 700;
+  font-size: 2rem;
   padding-right: 10px;
   display: block;
 }
@@ -73,20 +76,118 @@ table p{
   padding: 10px;
 }
 
+.select {
+  display:flex;
+  flex-direction: column;
+  width:150px;
+  height:40px;
+  margin: auto!important;
+
+
+}
+.option {
+  padding:0 30px 0 10px;
+  min-height:40px;
+  display:flex;
+  align-items:center;
+  position:absolute!important;
+  color: white;
+  top:0!important;
+  width: 100%;
+  pointer-events:none;
+  order:2;
+  z-index:5!important;
+  transition: 200ms ease-in-out;
+  box-sizing:border-box;
+  overflow:hidden;
+  white-space:nowrap;
+  clip-path: polygon(92% 0, 100% 25%, 100% 100%, 8% 100%, 0% 75%, 0 0);
+}
+
+
+
+.select:focus .option {
+  position:relative!important;
+  pointer-events:all;
+}
+
+.select input {
+  opacity:0;
+  position:absolute;
+  left:-99999px;
+
+}
+
+.select input:not(:checked) + label {
+  top: auto !important;
+  width: 150px;
+  z-index:2!important;
+  position:absolute!important;
+  transition: none;
+} 
+
+
+.select input:checked + label {
+  order: 1;
+  z-index:10;
+  display: flex;
+  position:relative!important;
+}
+
+.select input:checked + label {
+  z-index:5;
+}
+
+.select input:checked + label:after {
+  content:'';
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid white;
+  position: absolute !important;
+  right:15px;
+  top:calc(50% - 2.5px);
+  pointer-events:none;
+  z-index:20;
+  
+  clip-path: polygon(92% 0, 100% 25%, 100% 100%, 8% 100%, 0% 75%, 0 0);
+}
+
+.select input:checked + label:before {
+  position:absolute!important;
+  right:0;
+  height: 40px;
+  width: 40px;
+  content: '';
+  z-index: 20!important;
+  background: purple;
+}
+
+
 @media (min-width: 460px) {
   td {
     text-align: left;
+    display: flex;
  }
   td:before {
     display: inline-block;
     text-align: right;
     width: 140px;
  }
-  .select {
-    padding-left: 160px;
+
+ .select{
+    margin-left: 0!important;
+ }
+ .deleteBtnContainer {
+  margin-right: 10px;
+  text-align: right!important;
+  display: flex;
+  justify-content: flex-end;
  }
 }
-@media (min-width: 720px) {
+@media (min-width: 880px) {
+
   table {
     display: table;
  }
@@ -118,7 +219,13 @@ table p{
   tfoot th {
     display: table-cell;
  }
-
+  .select {
+    margin: auto!important;
+  }
+  .deleteBtnContainer {
+    margin: auto;
+    display: table-cell!important;
+  }
 }
 
 

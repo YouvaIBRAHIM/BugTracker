@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="../css/newBug.css">
     <link rel="stylesheet" href="../css/cyberpunk.css">
     <link rel="stylesheet" href="../css/main.css">
+    <script src="https://unpkg.com/notie" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous" defer></script>
+    <script src="../js/newBug.js" type="module" defer></script>
     <title>Bug Tracker - Nouveau bug</title>
 </head>
 <body>
@@ -25,7 +28,7 @@
     </header>
     <main>
         <section class="cyberpunk reverse">
-            <form>
+            <form id="newBugForm">
                 <fieldset>
                   <legend class="cyberpunk">
                     Nouveau bug
@@ -34,7 +37,7 @@
                     <label for="BugTitle" class="cyberpunk">
                       Titre du bug 
                     </label>
-                    <input class="cyberpunk" type="text" id="BugTitle" placeholder="Saisir le titre du bug" required>
+                    <input class="cyberpunk" type="text" id="bugTitle" placeholder="Saisir le titre du bug" >
                   </div>
                   <div class="box">
                     <label for="bugDescription" class="cyberpunk">

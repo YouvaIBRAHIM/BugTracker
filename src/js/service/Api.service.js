@@ -7,13 +7,23 @@ const baseURL = "http://greenvelvet.alwaysdata.net/bugTracker/api/";
 const instance = axios.create({
   baseURL: baseURL,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "text/plain",
   },
 });
 
 async function getFromBugTrackerApi(path) {
   try {
     const response = await instance.get(path)
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+}
+
+
+async function postToBugTrackerApi(path, data) {
+  try {
+    const response = await instance.post(path, data)
     return response;
   } catch (error) {
     return error.response;
@@ -43,4 +53,24 @@ export async function getAllBugs(userId = null) {
   const bugsListApi = `list/${user.token}/${userId ? userId : user.userId}`;  
   
   return getFromBugTrackerApi(bugsListApi);
+}
+
+export async function updateBugState(bugId, state) {
+  const updateBugStateApi = `state/${user.token}/${bugId}/${state}`;  
+  
+  return getFromBugTrackerApi(updateBugStateApi);
+}
+
+
+export async function deleteBug(bugId) {
+  const deleteApi = `delete/${user.token}/${bugId}`;  
+  
+  return getFromBugTrackerApi(deleteApi);
+}
+
+
+export async function addBug(data) {
+  const addApi = `add/${user.token}/${user.userId}`;  
+  
+  return postToBugTrackerApi(addApi, data);
 }

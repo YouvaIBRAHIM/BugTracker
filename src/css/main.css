@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("./notie.css");
 
 header,
 header nav ul {
@@ -21,6 +22,7 @@ header h1 {
     font-size: 20px!important;
     height: 30px!important;
     text-transform: uppercase;
+    color: #fff;
 }
 
 header nav ul{
@@ -46,7 +48,10 @@ header .menuItem {
   padding: 5px 40px;
 }
 
-
+.notie-button,
+.notie-button:after,
+.stateSelect,
+.stateSelect::after,
 .successMessage,
 .successMessage::after,
 .errorMessage,
@@ -66,30 +71,102 @@ header .menuItem {
     position: relative;
     cursor: pointer;
 }
-
-.successMessage:after,
 .errorMessage:after,
 .deleteBtnContainer a::after,
 .menuItem a::after {
-    --slice-0: inset(50% 50% 50% 50%);
-    --slice-1: inset(80% -6px 0 0);
-    --slice-2: inset(50% -6px 30% 0);
-    --slice-3: inset(10% -6px 85% 0);
-    --slice-4: inset(40% -6px 43% 0);
-    --slice-5: inset(80% -6px 5% 0);
-    content: 'MENU';
-    height: 40px;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #F8F005 5%);
-    text-shadow: -3px -3px 0px #FF013C, 3px 3px 0px #00E6F6;
-    clip-path: var(--slice-0);
+  --slice-0: inset(50% 50% 50% 50%);
+  --slice-1: inset(80% -6px 0 0);
+  --slice-2: inset(50% -6px 30% 0);
+  --slice-3: inset(10% -6px 85% 0);
+  --slice-4: inset(40% -6px 43% 0);
+  --slice-5: inset(80% -6px 5% 0);
+  content: 'MENU';
+  height: 40px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #F8F005 5%);
+  text-shadow: -3px -3px 0px #FF013C, 3px 3px 0px #00E6F6;
+  clip-path: var(--slice-0);
 }
 
+.notie-button:after,
+.notie-alert:after,
+.stateSelect:after,
+.successMessage:after{
+  --slice-0: inset(50% 50% 50% 50%);
+  --slice-1: inset(80% -6px 0 0);
+  --slice-2: inset(50% -6px 30% 0);
+  --slice-3: inset(10% -6px 85% 0);
+  --slice-4: inset(40% -6px 43% 0);
+  --slice-5: inset(80% -6px 5% 0);
+  content: "ÉTAT";
+  height: 40px;
+  display: block;
+  position: absolute;
+  background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #F8F005 5%);
+  text-shadow: -3px -3px 0px #FF013C, 3px 3px 0px #00E6F6;
+  clip-path: var(--slice-0);
+}
+.notie-button{
+  width: 30%;
+  margin: auto 10px;
+}
+
+.notie-button,
+.notie-button:after{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.notie-button:after{
+  content: "CONFIRMER";
+}
+.notie-button:last-child:after{
+  content: "ANNULER";
+}
+
+.notie-alert,
+.notie-alert:after{
+  font-size: 24px;
+  font-family: 'Bebas Neue', cursive;
+  border: 0;
+  color: #fff;
+  letter-spacing: 3px;
+  box-shadow: 6px 0px 0px #00E6F6;
+  outline: transparent;
+  position: relative;
+  cursor: pointer;
+}
+
+
+.notie-background-warning{
+  background: linear-gradient(45deg, transparent 5%, #ff9800 5%);
+}
+
+.notie-background-error{
+  background: linear-gradient(45deg, transparent 5%, #ff003c 5%);
+}
+
+.notie-background-info{
+  background: linear-gradient(45deg, transparent 5%, purple 5%);
+}
+
+.notie-background-success{
+  background: linear-gradient(45deg, transparent 5%, #8ae66e 5%);
+}
+.notie-background-overlay {
+  background-color: #585858; 
+}
+
+.notie-container{
+  box-shadow: none;
+}
 
 .errorMessage, 
 .errorMessage::after, 
@@ -105,8 +182,8 @@ header .menuItem {
 
 .errorMessage::after, 
 .deleteBtnContainer a::after {
-    background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #FF013C 5%);
-    text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
+  background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #FF013C 5%);
+  text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
 }
 
 .successMessage::after{
@@ -115,12 +192,23 @@ header .menuItem {
   content: 'INSCRIPTION RÉUSSIE';
 }
 
-.errorMessage:after,
+.errorMessage::after,
 .deleteBtnContainer a::after{
   content: 'ERREUR';
-
+  
+}
+.notie-alert::after{
+  content: "NOTIFICATION";
+  width: 100%;
+}
+.notie-alert,
+.notie-alert:after{
+  position: fixed;
+  top: 0;
 }
 
+.notie-button:hover::after,
+.stateSelect:hover::after,
 .successMessage:hover::after, 
 .errorMessage:hover::after, 
 .deleteBtnContainer a:hover::after,
@@ -128,11 +216,13 @@ header .menuItem {
     animation: 1s glitch;
     animation-timing-function: steps(2, end);
 }
-
+.notie-alert::after,
 .successMessage::after, 
 .errorMessage::after{
   animation: 500ms glitch infinite;
 }
+
+
   
 @keyframes glitch {
     0% {
