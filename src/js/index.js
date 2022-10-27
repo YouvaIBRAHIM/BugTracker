@@ -1,5 +1,6 @@
-import { logout } from "./service/Api.service.js";
-import { removeFromSessionStorage } from "./service/Storage.service.js";
+import { logoutFromApi } from "./service/Api.service.js";
+import { logout } from "./service/Utils.service.js";
+
 
 const logoutBtn = $("header .logout a");
 const menuArrow = $("header .arrowMenu")
@@ -13,11 +14,10 @@ menuArrow.on('click', function() {
 logoutBtn.on("click", function(event) {
     event.preventDefault();
     notie.confirm({ text: `Souhaitez-vous vous déconnecter ?`, submitText: "CONFIRMER", cancelText: "ANNULER" }, function() {
-        logout()
+        logoutFromApi()
         .then(res =>{
             if (res.data.result.status == "done") {
-                removeFromSessionStorage("user")
-                window.location = "/login.html"
+                logout()
             }else{
                 notie.alert({ type: 'warning', text: res.statusText.toUpperCase(), time: 2 })
             }

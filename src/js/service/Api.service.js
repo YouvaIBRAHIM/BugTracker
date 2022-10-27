@@ -1,5 +1,6 @@
 import "../../../node_modules/axios/dist/axios.min.js";
 import { getFromSessionStorage } from "./Storage.service.js";
+import { logout } from "./Utils.service.js";
 const user = getFromSessionStorage("user");
 
 const baseURL = "http://greenvelvet.alwaysdata.net/bugTracker/api/";
@@ -14,6 +15,9 @@ const instance = axios.create({
 async function getFromBugTrackerApi(path) {
   try {
     const response = await instance.get(path)
+    if (response.data.result?.message == "wrong token. Access denied") {
+      logout();
+    }
     return response;
   } catch (error) {
     return error.response;
@@ -24,6 +28,9 @@ async function getFromBugTrackerApi(path) {
 async function postToBugTrackerApi(path, data) {
   try {
     const response = await instance.post(path, data)
+    if (response.data.result?.message == "wrong token. Access denied") {
+      logout();
+    }
     return response;
   } catch (error) {
     return error.response;
@@ -36,7 +43,7 @@ export async function login(username, password) {
   return getFromBugTrackerApi(loginApi);
 }
 
-export async function logout() {
+export async function logoutFromApi() {
   const logoutApi = `logout/${user.token}`;  
   
   return getFromBugTrackerApi(logoutApi);
