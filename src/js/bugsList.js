@@ -2,9 +2,11 @@ import { getAllBugs, getAllUsers, updateBugState, deleteBug } from "./service/Ap
 
 import moment from "../../node_modules/moment/dist/moment.js";
 
+const allBugs = $(".stats .all strong");
+const bugsInProgress = $(".stats .inProgress strong");
+const bugsDone = $(".stats .done strong");
 const tableBody = $(".tableSection tbody");
 const searchBug = $("#searchBug");
-
 let bugsList = []; 
 let filtredBugsList = []; 
 let usersList = null;
@@ -32,20 +34,31 @@ function getAllUsersBugs(users) {
 
 function displayBugsList(bugsList, usersList) {
     tableBody.html("");
+    allBugs.text(bugsList.length)
+    bugsInProgress
+    bugsDone
+
+    let bugsInProgressNb = 0;
+    let bugsDoneNb = 0;
     if (bugsList !== null && bugsList.length > 0 && usersList !== null && usersList.length > 0 ) {
         bugsList.reverse();
         for (let i = 0; i < bugsList.length; i++) {
             const bug = bugsList[i];
-
+            if (bug.state == 2) {
+                bugsDoneNb++;
+            }else if(bug.state == 1){
+                bugsInProgressNb++;
+            }
+            
             tableBody.append(`
                 <tr data-bug-id="${bug?.id}">
-                    <td data-title="Bug" colspan="2">
-                    <h3  class="cyberpunk">
-                        ${bug?.title}
-                    </h3>
-                    <p>
-                        ${bug?.description}
-                    </p>
+                    <td class="bugColumn" data-title="Bug" colspan="2">
+                        <h3  class="cyberpunk">
+                            ${bug?.title}
+                        </h3>
+                        <p>
+                            ${bug?.description}
+                        </p>
                     </td>
                     <td data-title="Date">
                         ${moment.unix(bug?.timestamp).format("DD/MM/YYYY")}
@@ -72,6 +85,8 @@ function displayBugsList(bugsList, usersList) {
             `)
         }
     }
+    bugsInProgress.text(bugsInProgressNb)
+    bugsDone.text(bugsDoneNb)
 }
 
 tableBody.on("change", ".select", function(event) {
@@ -125,12 +140,22 @@ searchBug.on("keyup", function (event) {
     }
 
     filtredBugsList = bugsList.filter((bug) => {
-        const bugTitle = bug.title;
-        const bugDescription = bug.description;
+        const bugTitle = bug.title.toLowerCase();
+        const bugDescription = bug.description.toLowerCase();
+        const date = moment.unix(bug?.timestamp).format("DD/MM/YYYY");
+        const user = usersList[bug.user_id].toLowerCase();
+
         if (bugTitle.includes(searchValue.toLowerCase())) {
             return bug;
         }
         if (bugDescription.includes(searchValue.toLowerCase())) {
+            return bug;
+        }
+
+        if (date.includes(searchValue.toLowerCase())) {
+            return bug;
+        }
+        if (user.includes(searchValue.toLowerCase())) {
             return bug;
         }
 

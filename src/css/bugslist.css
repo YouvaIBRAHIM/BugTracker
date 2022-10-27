@@ -24,7 +24,13 @@ tr:last-child {
 td {
   padding: 10px 10px 0;
   text-align: center;
+
 }
+td.bugColumn{
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
 td:before {
   content: attr(data-title);
   color: purple;
@@ -186,6 +192,7 @@ table p{
   justify-content: flex-end;
  }
 }
+
 @media (min-width: 880px) {
 
   table {

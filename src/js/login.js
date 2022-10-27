@@ -14,10 +14,10 @@ const onLogin = (event) => {
     if (username !== "" && password != "") {
         const response = login(username, password);
         response.then(res => {
-            if (res.status == 200) {
+            if (res.data.result.status == "done") {
                 onSuccessLogin(res.data, username)
             }else{
-                errorMessage(res.statusText, errorMessageContainer);
+                errorMessage(res.data.result.message, errorMessageContainer);
             }
         })
         .catch(err => {
