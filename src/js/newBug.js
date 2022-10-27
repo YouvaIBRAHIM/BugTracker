@@ -1,4 +1,8 @@
+import { generateHeader } from "./header.js";
 import { addBug } from "./service/Api.service.js";
+
+const currentPage = "newBug";
+generateHeader(currentPage);
 
 const newBugForm = $("#newBugForm");
 

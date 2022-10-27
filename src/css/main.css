@@ -4,7 +4,7 @@
 header,
 header nav ul {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
@@ -12,10 +12,43 @@ header nav ul {
 header{
     background: #FF013C!important;
     padding: 0!important;
-    position: sticky;
+    position: sticky!important;
     width: 100%;
     top: -1px;
-    z-index: 2;
+    z-index: 50;
+    transition: 500ms ease-in-out;
+
+}
+header nav{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 20px;
+  overflow: hidden;
+}
+
+header nav.open{
+  max-height: none;
+  overflow:initial;
+}
+header .arrowMenu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+}
+header .arrowMenu img{
+  width: 20px;
+  display: block;
+  margin: auto;
+  transform: rotate(180deg);
+  transition: 500ms ease-in-out;
+}
+
+header .arrowMenu img.open{
+  transform: rotate(0deg);
 }
 
 header h1 {
@@ -28,8 +61,11 @@ header h1 {
 header nav ul{
     margin: 10px 0;
     padding: 0;
+    display: none;
 }
-
+header nav ul.open{
+  display: flex;
+}
 header .menuItem {
     list-style: none;
     display: inline-block;
@@ -42,10 +78,12 @@ header .menuItem {
   display: none;
 }
 
-.menuItem a,
 .successMessage,
 .errorMessage{
   padding: 5px 40px;
+}
+.menuItem a{
+  padding: 5px 25px;
 }
 
 .notie-button,
@@ -71,6 +109,7 @@ header .menuItem {
     position: relative;
     cursor: pointer;
 }
+.active a:after,
 .errorMessage:after,
 .deleteBtnContainer a::after,
 .menuItem a::after {
@@ -216,6 +255,8 @@ header .menuItem {
     animation: 1s glitch;
     animation-timing-function: steps(2, end);
 }
+
+.active a::after,
 .notie-alert::after,
 .successMessage::after, 
 .errorMessage::after{
@@ -284,5 +325,27 @@ main{
     width: 50%;
     margin: auto;
   }
-    
+
+  header,
+  header nav ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .arrowMenu{
+    display: none!important;
+  }
+
+  header nav{
+    max-height: none;
+  }
 }
+
+@media (max-width: 760px) and (min-width: 550px) {
+  .menuItem a{
+    padding: 0px 5px;
+  }
+}
+

@@ -1,6 +1,9 @@
 import { getAllBugs, getAllUsers, updateBugState, deleteBug } from "./service/Api.service.js";
-
 import moment from "../../node_modules/moment/dist/moment.js";
+import { generateHeader } from "./header.js";
+
+const currentPage = window.location.href.split("/").reverse()[0].split(".")[0];
+generateHeader(currentPage);
 
 const allBugs = $(".stats .all strong");
 const bugsInProgress = $(".stats .inProgress strong");
@@ -20,23 +23,25 @@ usersListFromApi.then((res) => {
 
 function getAllUsersBugs(users) {
     
-    const bugs = getAllBugs("0");
+    const bugs = getAllBugs(currentPage == "bugsList.html" ? "0" : null);
         bugs.then(bugsRes => {
         const userBugs = bugsRes.data.result.bug;
 
         if (userBugs.length > 0) {
-            bugsList = [...bugsList, ...userBugs] 
+            if (currentPage == "myBugs.html") {
+                bugsList = userBugs.filter(bug => bug.state == 0);
+            }else{
+                bugsList = [...bugsList, ...userBugs] 
+            }
         }
-        displayBugsList(bugsList, users);
+            displayBugsList(bugsList, users);
     })
     .catch((bugsErr) => console.log(bugsErr))
 }
 
 function displayBugsList(bugsList, usersList) {
     tableBody.html("");
-    allBugs.text(bugsList.length)
-    bugsInProgress
-    bugsDone
+    allBugs.text(bugsList.length);
 
     let bugsInProgressNb = 0;
     let bugsDoneNb = 0;
@@ -56,7 +61,7 @@ function displayBugsList(bugsList, usersList) {
                         <h3  class="cyberpunk">
                             ${bug?.title}
                         </h3>
-                        <p>
+                        <p class="cyberpunk scannedh">
                             ${bug?.description}
                         </p>
                     </td>
@@ -97,6 +102,10 @@ tableBody.on("change", ".select", function(event) {
     .then(res => {
         if (res.status == 200) {
             notie.alert({ type: 'success', text: 'ÉTAT DU BUG À JOUR', time: 2 })
+            if (currentPage == "myBugs.html" && newState > 0) {
+                bugsList = bugsList.filter(bug => bug.id !== bugId);
+                displayBugsList(bugsList, usersList)
+            }
 
         }else{
             notie.alert({ type: 'warning', text: res.statusText.toUpperCase(), time: 2 })

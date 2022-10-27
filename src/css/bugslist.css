@@ -26,11 +26,21 @@ td {
   text-align: center;
 
 }
-td.bugColumn{
-  overflow: hidden;
-  overflow-wrap: anywhere;
+
+td.bugColumn h3,
+td.bugColumn p{
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex: 1 1 auto;
+  word-break: break-all;
+  max-height: 250px;
 }
 
+td.bugColumn h3::-webkit-scrollbar,
+td.bugColumn p::-webkit-scrollbar {
+  display: none;
+}
 td:before {
   content: attr(data-title);
   color: purple;
@@ -110,8 +120,13 @@ table p{
   clip-path: polygon(92% 0, 100% 25%, 100% 100%, 8% 100%, 0% 75%, 0 0);
 }
 
+td h3{
+  min-width: 50px;
+}
 
-
+td p{
+  min-width: 150px;
+}
 .select:focus .option {
   position:relative!important;
   pointer-events:all;
@@ -181,6 +196,15 @@ table p{
     text-align: right;
     width: 140px;
  }
+
+  td.bugColumn h3,
+  td.bugColumn p{
+    max-width: 400px;
+  }
+
+  td.bugColumn p{
+    padding: 10px 50px 10px 10px;
+  }
 
  .select{
     margin-left: 0!important;
