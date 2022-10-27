@@ -224,6 +224,7 @@ table p{
   }
   .deleteBtnContainer {
     margin: auto;
+    text-align: center!important;
     display: table-cell!important;
   }
 }

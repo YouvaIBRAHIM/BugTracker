@@ -222,7 +222,10 @@ header .menuItem {
   animation: 500ms glitch infinite;
 }
 
-
+.searchBar{
+  width: 90%;
+  margin: auto;
+}
   
 @keyframes glitch {
     0% {
@@ -273,5 +276,13 @@ header .menuItem {
 
 main{
     position: relative;
-    top: 50px
+    top: 20px
+}
+
+@media (min-width: 880px) {
+  .searchBar{
+    width: 50%;
+    margin: auto;
+  }
+    
 }

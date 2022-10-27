@@ -3,8 +3,10 @@ import { getAllBugs, getAllUsers, updateBugState, deleteBug } from "./service/Ap
 import moment from "../../node_modules/moment/dist/moment.js";
 
 const tableBody = $(".tableSection tbody");
+const searchBug = $("#searchBug");
 
 let bugsList = []; 
+let filtredBugsList = []; 
 let usersList = null;
 const usersListFromApi = getAllUsers();
 usersListFromApi.then((res) => {
@@ -31,6 +33,7 @@ function getAllUsersBugs(users) {
 function displayBugsList(bugsList, usersList) {
     tableBody.html("");
     if (bugsList !== null && bugsList.length > 0 && usersList !== null && usersList.length > 0 ) {
+        bugsList.reverse();
         for (let i = 0; i < bugsList.length; i++) {
             const bug = bugsList[i];
 
@@ -63,7 +66,7 @@ function displayBugsList(bugsList, usersList) {
                       </div>
                     </td>
                     <td class="deleteBtnContainer">
-                    <a>Supprimer</a>
+                        <a>Supprimer</a>
                     </td>
                 </tr>
             `)
@@ -114,12 +117,24 @@ tableBody.on("click", ".deleteBtnContainer a", function(event) {
 
 })
 
-// Showing all available options with defaults
-notie.setOptions({
-    ids: {
-      overlay: 'notie-overlay'
-    },
-    positions: {
-      confirm: 'top',
+searchBug.on("keyup", function (event) {
+    const searchValue = event.target.value;
+
+    if (searchValue.trim() == "") {
+        return displayBugsList(bugsList, usersList)
     }
+
+    filtredBugsList = bugsList.filter((bug) => {
+        const bugTitle = bug.title;
+        const bugDescription = bug.description;
+        if (bugTitle.includes(searchValue.toLowerCase())) {
+            return bug;
+        }
+        if (bugDescription.includes(searchValue.toLowerCase())) {
+            return bug;
+        }
+
+    });
+
+    displayBugsList(filtredBugsList, usersList)
 })

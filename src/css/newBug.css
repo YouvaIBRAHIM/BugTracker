@@ -6,20 +6,23 @@ h1 {
 }
     
 form {
-    width: 95%;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
 }
    
 fieldset{
+    display: contents;
+
     border-color: black;
 }
 
 .box {
-    width: 100%!important;
-    padding: 0.5rem;
+    width: 90%!important;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    padding: auto;
+    margin: auto;
 }
     
 label {
@@ -28,9 +31,14 @@ label {
     margin-bottom: 20px;
 }
   
+.box .cyberpunk2077{
+    padding: 15px 25px;
+}
 
-@media (min-width: 460px) {    
-        
+@media (min-width: 680px) {    
+    form {
+        margin: 0 auto;
+    }
     label {
         width: 40%;
         margin-bottom: 0px;
@@ -40,7 +48,14 @@ label {
         float: left;
         width: 50%;
         flex-direction: row;
-        margin: 20px auto;
+        margin: 0;
+        padding: 0.5rem;
     }
+
+ 
+    fieldset{
+        display: block;
+    }
+
 }
     
