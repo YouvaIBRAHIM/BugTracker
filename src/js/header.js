@@ -3,6 +3,13 @@ export function generateHeader(currentPage) {
 
     body.prepend(`
         <header class="cyberpunk">
+            <aside class="cyberpunk logoutAside">
+                <ul class="logout">
+                    <li>
+                        <a href=""><i class="fa fa-power-off" style="font-size:18px;color:#FF013C"></i> DÉCONNEXION</a>
+                    </li>
+                </ul>
+            </aside>
             <h1 class="cyberpunk glitched">Bug Tracker</h1>
             <nav>
                 <a class="arrowMenu"><img src="../assets/arrow.svg"></a>

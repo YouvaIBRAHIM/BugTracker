@@ -36,6 +36,12 @@ export async function login(username, password) {
   return getFromBugTrackerApi(loginApi);
 }
 
+export async function logout() {
+  const logoutApi = `logout/${user.token}`;  
+  
+  return getFromBugTrackerApi(logoutApi);
+}
+
 export async function signUp(username, password) {
   const signUpApi = `signup/${username}/${password}`;  
 

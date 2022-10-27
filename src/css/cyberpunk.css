@@ -1028,6 +1028,7 @@ a.cyberpunk2077:focus:before {
 
 
 /* Aside */
+
 aside.cyberpunk {
   --width: 270px;
   position: fixed;
@@ -1035,9 +1036,12 @@ aside.cyberpunk {
   left: calc(100% - 43px);
   width: var(--width);
   transition: left 0.3s;
-  z-index: 555;
+  z-index: 555!important;
 }
+aside.logoutAside{
+  top: 20px;
 
+}
 aside.cyberpunk:hover {
   left: calc(100% - var(--width) + 5px);
 }
@@ -1073,6 +1077,7 @@ aside.cyberpunk ul li:hover {
   background-color: #000;
 }
 
+aside.cyberpunk ul li a,
 aside.cyberpunk ul li span {
   display: block;
   padding: 5px 10px;
@@ -1080,7 +1085,7 @@ aside.cyberpunk ul li span {
   transform: skew(15deg);
   transition: color 0.3s;
 }
-
+aside.cyberpunk ul li:hover a,
 aside.cyberpunk ul li:hover span {
   color: var(--yellow-color);
 }
@@ -1094,6 +1099,10 @@ aside.cyberpunk a:after {
 
   aside.cyberpunk {
     top: 100px;
+  }
+  aside.logoutAside{
+    top: 20px!important;
+  
   }
 }
 

@@ -23,12 +23,12 @@ usersListFromApi.then((res) => {
 
 function getAllUsersBugs(users) {
     
-    const bugs = getAllBugs(currentPage == "bugsList.html" ? "0" : null);
+    const bugs = getAllBugs(currentPage == "bugsList" ? "0" : null);
         bugs.then(bugsRes => {
         const userBugs = bugsRes.data.result.bug;
 
         if (userBugs.length > 0) {
-            if (currentPage == "myBugs.html") {
+            if (currentPage == "myBugs") {
                 bugsList = userBugs.filter(bug => bug.state == 0);
             }else{
                 bugsList = [...bugsList, ...userBugs] 
@@ -102,7 +102,7 @@ tableBody.on("change", ".select", function(event) {
     .then(res => {
         if (res.status == 200) {
             notie.alert({ type: 'success', text: 'ÉTAT DU BUG À JOUR', time: 2 })
-            if (currentPage == "myBugs.html" && newState > 0) {
+            if (currentPage == "myBugs" && newState > 0) {
                 bugsList = bugsList.filter(bug => bug.id !== bugId);
                 displayBugsList(bugsList, usersList)
             }
