@@ -1,7 +1,19 @@
-import { signUp } from "./service/Api.service.js";
-import { setToSessionStorage } from "./service/Storage.service.js";
+import { signUp, login } from "./service/Api.service.js";
+import { setToSessionStorage, getFromSessionStorage } from "./service/Storage.service.js";
 import { errorMessage } from "./service/Utils.service.js";
-
+const userFromSessionStorage = getFromSessionStorage("user")
+if (userFromSessionStorage?.token) {
+    window.location = "/src/pages/bugsList.html";
+}
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const urlMessage = urlParams.get('message');
+if (urlMessage && urlMessage=="wrongToken") {
+    notie.alert({ type: 'warning', text: "VOTRE TOKEN N'EST PLUS VALIDE.", time: 2 })
+}
+if (urlMessage && urlMessage=="noToken") {
+    notie.alert({ type: 'warning', text: "VOUS N'AVEZ PAS DE TOKEN VALIDE.", time: 2 })
+}
 const username = $("#username");
 const password = $("#password");
 const passwordValidation = $("#passwordValidation");
@@ -13,9 +25,59 @@ const passwordRequirements = $("#passwordRequirements");
 const lowerCaseLetters = /[a-z]/g;
 const upperCaseLetters = /[A-Z]/g;
 const numbers = /[0-9]/g;
+const loginErrorMessageContainer = $('.login .errorMessage');
+const loginSuccessContainer = $('.login #successContainer');
+
 const errorMessageContainer = $('.errorMessage');
-const successContainer = $('#successContainer');
-const successMessageTitle = $('#successContainer h4');
+const successContainer = $('.signUp #successContainer');
+const successMessageTitle = $('.signUp #successContainer h4');
+
+const loginContainer = $('.login');
+const signUpContainer = $('.signUp');
+
+$( window ).on( 'hashchange', function( e ) {
+    loginContainer.toggleClass('hide')
+    signUpContainer.toggleClass('hide')
+} );
+
+const onLogin = (event) => {
+    event.preventDefault();
+    const username = $("#loginUsername").val().trim();
+    const password = $("#loginPassword").val().trim();
+
+    if (username !== "" && password != "") {
+        const response = login(username, password);
+        response.then(res => {
+            if (res.data.result.status == "done") {
+                onSuccessLogin(res.data, username)
+            }else{
+                errorMessage(res.data.result.message, loginErrorMessageContainer);
+            }
+        })
+        .catch(err => {
+            errorMessage(err.message, loginErrorMessageContainer);
+        });
+    }else{
+        errorMessage("Un ou plusieurs champs sont vides.", loginErrorMessageContainer);
+    }
+}
+
+const onSuccessLogin = (data, usernameValue) => {
+    loginErrorMessageContainer.css('display', 'none');
+    loginSuccessContainer.css('display', 'block');
+
+    setToSessionStorage("user", {
+        userId: data.result.id,
+        userName: usernameValue,
+        token: data.result.token,
+    })
+
+    setTimeout(() => {
+        window.location = "/src/pages/bugsList.html";
+    }, 2000);
+}
+
+$(".loginBtnContainer button").on("click", onLogin)
 
 const onSignUp = (event) => {
     event.preventDefault();
@@ -38,18 +100,14 @@ const onSignUp = (event) => {
 }
 
 
-// When the user clicks on the password field, show the message box
 password.on("focus", function() {
     passwordRequirements.css('display', 'block');
 })
 
-
-// When the user clicks outside of the password field, hide the message box
 password.on("blur", function() {
     passwordRequirements.css('display', 'none');
 })
 
-// When the user starts to type something inside the password field
 password.on("keyup", function() {
     // Validate lowercase letters
     if(password.val().match(lowerCaseLetters)) {

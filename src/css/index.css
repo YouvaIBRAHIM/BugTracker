@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 .container,
+.container form,
 .formContainer{
     display: flex;
     justify-content: center;
@@ -133,4 +134,12 @@
       clip-path: var(--slice-1);
       transform: translate(0);
     }
+}
+
+.login.hide{
+  display: none;
+}
+
+.signUp.hide{
+  display: none;
 }

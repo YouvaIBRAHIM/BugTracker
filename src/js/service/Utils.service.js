@@ -6,9 +6,13 @@ export const errorMessage = (errorMessage, errorMessageContainer) => {
     errorMessageContainer.css('display', 'block');
 }
 
-export function logout() {
+export function logout(urlParam = null) {
     removeFromSessionStorage("user")
-    window.location = "/login.html"
+    if (!urlParam) {
+        window.location = "/index.html"
+    }else{
+        window.location = `/index.html?message=${urlParam}`
+    }
 }
 
 export function checkUserTokenExist(user) {

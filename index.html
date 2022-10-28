@@ -6,29 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./src/css/index.css">
     <link rel="stylesheet" href="./src/css/cyberpunk.css">
-    <script src="./src/js/index.js" type="module" defer></script>
+    <link rel="stylesheet" href="./src/css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notie/4.3.1/notie.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous" defer></script>
+    <script src="./src/js/sign.js" type="module" defer></script>
     <title>Bug Tracker</title>
 </head>
 <body>
     <main>
         <div class="container">
-            <img src="./src/assets/logo.png" alt="logo"  />
             <h1  class="cyberpunk glitched">Bienvenue sur Bug Tracker</h1>
-            <div class="formContainer">
-                <h2 class="cyberpunk">Login</h2>
-                <span class="errorMessage"></span>
-
-                <section class="cyberpunk">
-                    <form style="max-width: 500px">
-                        <input class="cyberpunk" type="email"  placeholder="Email"/>
-                        <input class="cyberpunk" type="password" placeholder="Mot de passe"/>
-                        <div class="loginBtnContainer">
-                            <button>Se connecter</button>
-                        </div>
-                    </form>
-                </section>
+            <div class="login">
+                <div class="formContainer">
+                    <h2 class="cyberpunk">CONNEXION</h2>
+                    <span class="errorMessage">ERREUR</span>
+                    <div id="successContainer">
+                        <span class="successMessage" id="successMessage" >CONNEXION RÉUSSIE</span>
+                    </div>
+    
+                    <section class="cyberpunk">
+                        <form style="max-width: 500px">
+                            <input class="cyberpunk" type="text" id="loginUsername"  placeholder="Nom d'utilisateur"/>
+                            <input class="cyberpunk" type="password" id="loginPassword" placeholder="Mot de passe"/>
+                            <a href="#signup">S'INSCRIRE ?</a>
+                            <div class="loginBtnContainer">
+                                <button>Se connecter</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
             </div>
+            <div class="signUp hide">
+                <div class="formContainer">
+                    <h2 class="cyberpunk">INSCRIPTION</h2>
+                    <span class="errorMessage">ERREUR</span>
+                    <div id="successContainer">
+                        <span class="successMessage" id="successMessage" >INSCRIPTION RÉUSSIE</span>
+                        <h4 class="cyberpunk" >Vous allez être redirigé vers la page d'accueil.</h4>
+                    </div>
+    
+                    <section class="cyberpunk">
+                        <form style="max-width: 500px">
+                            <input class="cyberpunk" type="text" id="username"  placeholder="Nom d'utilisateur"/>
+                            <input class="cyberpunk" type="password" id="password" placeholder="Mot de passe"/>
+                            <div id="passwordRequirements">
+                                <h4 class="cyberpunk">Le mot de passe doit contenir les éléments suivants</h4>
+                                <ul class="cyberpunk">
+                                    <li id="letter" class="glitched">Une lettre miniscule.</li>
+                                    <li id="capital" class="glitched">Une lettre majuscule.</li>
+                                    <li id="number" class="glitched">Un chiffre.</li>
+                                    <li id="length" class="glitched">Un minimum de 8 caractères.</li>
+                                </ul>
+                            </div>
+                            <input class="cyberpunk" type="password" id="passwordValidation" placeholder="Confirmer le mot de passe"/>
+                            <a href="#login">SE CONNECTER ?</a>
 
+                            <div class="signInBtnContainer">
+                                <button>S'inscrire</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
         </div>
     </main>
 </body>

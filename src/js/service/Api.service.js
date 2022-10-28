@@ -28,7 +28,7 @@ async function postToBugTrackerApi(path, data) {
   try {
     const response = await instance.post(path, data)
     if (response.data.result?.message == "wrong token. Access denied") {
-      logout();
+      logout("wrongToken");
     }
     return response;
   } catch (error) {
