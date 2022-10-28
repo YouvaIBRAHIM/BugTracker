@@ -10,3 +10,9 @@ export function logout() {
     removeFromSessionStorage("user")
     window.location = "/login.html"
 }
+
+export function checkUserTokenExist(user) {
+    if (!user?.token) {
+        logout("noToken")
+    }
+}

@@ -66,7 +66,7 @@ function displayBugsList(bugsList, usersList) {
                         </p>
                     </td>
                     <td data-title="Date">
-                        ${moment.unix(bug?.timestamp).format("DD/MM/YYYY")}
+                        ${moment.unix(bug?.timestamp).format("DD/MM/YYYY HH:mm:ss")}
                     </td>
                     <td data-title="Nom">
                         ${usersList[bug?.user_id]}
@@ -151,7 +151,7 @@ searchBug.on("keyup", function (event) {
     filtredBugsList = bugsList.filter((bug) => {
         const bugTitle = bug.title.toLowerCase();
         const bugDescription = bug.description.toLowerCase();
-        const date = moment.unix(bug?.timestamp).format("DD/MM/YYYY");
+        const date = moment.unix(bug?.timestamp).format("DD/MM/YYYY HH:mm:ss");
         const user = usersList[bug.user_id].toLowerCase();
 
         if (bugTitle.includes(searchValue.toLowerCase())) {

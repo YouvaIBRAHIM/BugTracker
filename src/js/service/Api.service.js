@@ -1,7 +1,6 @@
 import "../../../node_modules/axios/dist/axios.min.js";
 import { getFromSessionStorage } from "./Storage.service.js";
-import { logout } from "./Utils.service.js";
-const user = getFromSessionStorage("user");
+import { checkUserTokenExist, logout } from "./Utils.service.js";
 
 const baseURL = "http://greenvelvet.alwaysdata.net/bugTracker/api/";
 // initialisation d'une instance axios
@@ -16,7 +15,7 @@ async function getFromBugTrackerApi(path) {
   try {
     const response = await instance.get(path)
     if (response.data.result?.message == "wrong token. Access denied") {
-      logout();
+      logout("wrongToken");
     }
     return response;
   } catch (error) {
@@ -44,7 +43,9 @@ export async function login(username, password) {
 }
 
 export async function logoutFromApi() {
-  const logoutApi = `logout/${user.token}`;  
+  const user = getFromSessionStorage("user");
+  checkUserTokenExist(user);
+  const logoutApi = `logout/${user?.token}`;  
   
   return getFromBugTrackerApi(logoutApi);
 }
@@ -55,35 +56,44 @@ export async function signUp(username, password) {
   return getFromBugTrackerApi(signUpApi);
 }
 
-
 export async function getAllUsers() {
-  const usersListApi = `users/${user.token}`;  
+  const user = getFromSessionStorage("user");
+  checkUserTokenExist(user);
+  const usersListApi = `users/${user?.token}`;  
   
   return getFromBugTrackerApi(usersListApi);
 }
 
 export async function getAllBugs(userId = null) {
-  const bugsListApi = `list/${user.token}/${userId ? userId : user.userId}`;  
+  const user = getFromSessionStorage("user");
+  checkUserTokenExist(user);
+  const bugsListApi = `list/${user?.token}/${userId ? userId : user.userId}`;  
   
   return getFromBugTrackerApi(bugsListApi);
 }
 
 export async function updateBugState(bugId, state) {
-  const updateBugStateApi = `state/${user.token}/${bugId}/${state}`;  
+  const user = getFromSessionStorage("user");
+  checkUserTokenExist(user);
+  const updateBugStateApi = `state/${user?.token}/${bugId}/${state}`;  
   
   return getFromBugTrackerApi(updateBugStateApi);
 }
 
 
 export async function deleteBug(bugId) {
-  const deleteApi = `delete/${user.token}/${bugId}`;  
+  const user = getFromSessionStorage("user");
+  checkUserTokenExist(user)
+  const deleteApi = `delete/${user?.token}/${bugId}`;  
   
   return getFromBugTrackerApi(deleteApi);
 }
 
 
 export async function addBug(data) {
-  const addApi = `add/${user.token}/${user.userId}`;  
+  const user = getFromSessionStorage("user");
+  checkUserTokenExist(user)
+  const addApi = `add/${user?.token}/${user.userId}`;  
   
   return postToBugTrackerApi(addApi, data);
 }
