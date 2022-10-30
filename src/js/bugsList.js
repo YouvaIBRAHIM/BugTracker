@@ -38,8 +38,8 @@ function getAllUsersBugs(users) {
 
                 if (userBugs.length > 0) {
                     if (currentPage == "myBugs") {
-                        // récupère seulement les bugs à traiter
-                        bugsList = userBugs.filter(bug => bug.state == 0);
+                        // récupère seulement les bugs à traiter ou en cours
+                        bugsList = userBugs.filter(bug => bug.state !== 2);
                     }else{
                         bugsList = [...bugsList, ...userBugs] 
                     }
@@ -126,7 +126,8 @@ tableBody.on("change", ".select", function(event) {
     .then(res => {
         if (res.status == 200) {
             notie.alert({ type: 'success', text: 'ÉTAT DU BUG À JOUR', time: 2 })
-            if (currentPage == "myBugs" && newState > 0) {
+            // si le nouvel etat est "traité" on retire le bug de la liste
+            if (currentPage == "myBugs" && newState == 2) {
                 bugsList = bugsList.filter(bug => bug.id !== bugId);
                 displayBugsList(bugsList, usersList)
             }
