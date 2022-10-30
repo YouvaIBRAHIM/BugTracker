@@ -104,10 +104,10 @@ const onSignUp = (event) => {
     if (isValidUsername() && isValidPassword()) {
         const response = signUp(usernameValue, passwordValue);
         response.then(res => {
-            if (res.status == 200) {
+            if (res.data.result.status == "done") {
                 onSuccessSignUp(res.data, usernameValue);
             }else{
-                errorMessage(res.statusText, errorMessageContainer);
+                errorMessage(res.data.result.message, errorMessageContainer);
             }
         })
         .catch(err => {
@@ -189,7 +189,7 @@ const isValidPassword = () => {
     }
 }
 
-// verifie si le nom de l'utilisateur contient au moins 3 lettres et ne possède pas caracères spéciaux
+// verifie si le nom de l'utilisateur contient au moins 3 lettres
 const isValidUsername = () => {
     if(username.val().trim().length >= 3 &&
         (
