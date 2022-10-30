@@ -39,7 +39,7 @@ function getAllUsersBugs(users) {
                 if (userBugs.length > 0) {
                     if (currentPage == "myBugs") {
                         // récupère seulement les bugs à traiter ou en cours
-                        bugsList = userBugs.filter(bug => bug.state !== 2);
+                        bugsList = userBugs.filter(bug => bug.state != 2);
                     }else{
                         bugsList = [...bugsList, ...userBugs] 
                     }
