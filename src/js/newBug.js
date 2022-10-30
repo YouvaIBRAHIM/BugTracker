@@ -35,7 +35,6 @@ newBugForm.on("submit", function(event) {
 
         addBug(JSON.stringify(newBug))
         .then(res => {
-            console.log(res);
             if (res.status == 200) {
                 notie.alert({ type: 'success', text: 'NOUVEAU BUG AJOUTÉ.', time: 2 })
     

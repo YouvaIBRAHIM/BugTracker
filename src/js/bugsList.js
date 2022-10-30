@@ -22,7 +22,7 @@ usersListFromApi.then((res) => {
 
     getAllUsersBugs(usersList);
 })
-.catch((err) => console.log(err))
+.catch((err) => notie.alert({ type: 'error', text: err.message, time: 2 }))
 
 /**
  * récupération des bugs
@@ -33,17 +33,22 @@ function getAllUsersBugs(users) {
     // Selon la page actuelle (bugsList ou myBugs) on récupère soit tous les bugs ou seulement ceux de l'utilisateur
     const bugs = getAllBugs(currentPage == "bugsList" ? "0" : null);
         bugs.then(bugsRes => {
-        const userBugs = bugsRes.data.result.bug;
+            if (bugsRes.data.result.status == "done") {
+                const userBugs = bugsRes.data.result.bug.reverse();
 
-        if (userBugs.length > 0) {
-            if (currentPage == "myBugs") {
-                // récupère seulement les bugs à traiter
-                bugsList = userBugs.filter(bug => bug.state == 0);
+                if (userBugs.length > 0) {
+                    if (currentPage == "myBugs") {
+                        // récupère seulement les bugs à traiter
+                        bugsList = userBugs.filter(bug => bug.state == 0);
+                    }else{
+                        bugsList = [...bugsList, ...userBugs] 
+                    }
+                }
+                displayBugsList(bugsList, users);
+                
             }else{
-                bugsList = [...bugsList, ...userBugs] 
+                notie.alert({ type: 'warning', text: bugsRes.statusText.toUpperCase(), time: 2 })
             }
-        }
-        displayBugsList(bugsList, users);
     })
     .catch((bugsErr) => notie.alert({ type: 'error', text: bugsErr.message, time: 2 }))
 }
@@ -60,7 +65,7 @@ function displayBugsList(bugsList, usersList) {
     let bugsInProgressNb = 0;
     let bugsDoneNb = 0;
     if (bugsList !== null && bugsList.length > 0 && usersList !== null && usersList.length > 0 ) {
-        bugsList.reverse();
+        
         for (let i = 0; i < bugsList.length; i++) {
             const bug = bugsList[i];
             // calcule le nombre de bugs en cours et traités
@@ -142,7 +147,7 @@ tableBody.on("click", ".deleteBtnContainer a", function(event) {
     notie.confirm({ text: `Voulez-vous vraiment supprimer ce bug ? <br> <strong>( ${bug.title} )</strong>`, submitText: "CONFIRMER", cancelText: "ANNULER" }, function() {
         deleteBug(bugId)
         .then(res =>{
-            if (res.status == 200) {
+            if (res.data.result.status == "done") {
                 notie.alert({ type: 'success', text: 'BUG SUPPRIMÉ'})
                 bugsList = bugsList.filter(bug => bug.id !== bugId);
                 displayBugsList(bugsList, usersList)
