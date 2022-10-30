@@ -277,7 +277,8 @@ header .menuItem {
   width: 90%;
   margin: auto;
 }
-  
+
+
 @keyframes glitch {
     0% {
       clip-path: var(--slice-1);

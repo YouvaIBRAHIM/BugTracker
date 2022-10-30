@@ -112,6 +112,9 @@ function displayBugsList(bugsList, usersList) {
     }
     bugsInProgress.text(bugsInProgressNb)
     bugsDone.text(bugsDoneNb)
+    if (bugsList.length > 0) {
+        pagination() 
+    }
 }
 
 // au changement d'état d'un bug
@@ -195,3 +198,25 @@ searchBug.on("keyup", function (event) {
 
     displayBugsList(filtredBugsList, usersList)
 })
+
+
+// génére la pagination
+function pagination() {
+    const items = $("tbody tr");
+    const numItems = items.length;
+    const perPage = 10;
+
+    items.slice(perPage).hide();
+
+    $('#pagination').pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        prevText: "&laquo;",
+        nextText: "&raquo;",
+        onPageClick: function (pageNumber) {
+            const showFrom = perPage * (pageNumber - 1);
+            const showTo = showFrom + perPage;
+            items.hide().slice(showFrom, showTo).show();
+        }
+    });
+}
