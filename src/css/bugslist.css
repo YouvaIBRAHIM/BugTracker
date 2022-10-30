@@ -1,6 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+/* Table */
 section.tableSection{
   padding: 20px 0!important;
 }
@@ -37,10 +38,12 @@ td.bugColumn p{
   max-height: 250px;
 }
 
+/* cache la scrollbar si le titre ou la descriptionest trop longue */
 td.bugColumn h3::-webkit-scrollbar,
 td.bugColumn p::-webkit-scrollbar {
   display: none;
 }
+
 td:before {
   content: attr(data-title);
   color: purple;
@@ -72,6 +75,7 @@ thead th {
   padding: 5px 30px;
 }
 
+/* bouton de suppression */
 .deleteBtnContainer a,
 .deleteBtnContainer a::after{
     background: linear-gradient(45deg, transparent 5%, #FF013C 5%);
@@ -92,6 +96,7 @@ table p{
   padding: 10px;
 }
 
+/* composant permettant de seletionner un nouvel etat du bug */
 .select {
   display:flex;
   flex-direction: column;
@@ -185,7 +190,7 @@ td p{
   background: purple;
 }
 
-
+/* mode tablette */
 @media (min-width: 460px) {
   td {
     text-align: left;
@@ -217,6 +222,7 @@ td p{
  }
 }
 
+/* mode bureau */
 @media (min-width: 880px) {
 
   table {

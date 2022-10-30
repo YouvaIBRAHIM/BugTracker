@@ -4,15 +4,17 @@ import { logout } from "./service/Utils.service.js";
 
 const logoutBtn = $("header .logout a");
 const menuArrow = $("header .arrowMenu")
-
+// affiche ou cache le menu déroulant sur mobile
 menuArrow.on('click', function() {
     $("header .arrowMenu img").toggleClass("open")
     $("header nav").toggleClass("open")
     $("header nav ul").toggleClass("open")
 })
 
+// au clic du bouton "déconnexion"
 logoutBtn.on("click", function(event) {
     event.preventDefault();
+    // demande une confirmation
     notie.confirm({ text: `Souhaitez-vous vous déconnecter ?`, submitText: "CONFIRMER", cancelText: "ANNULER" }, function() {
         logoutFromApi()
         .then(res =>{
@@ -29,3 +31,4 @@ logoutBtn.on("click", function(event) {
  
     })
 })
+

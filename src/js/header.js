@@ -1,3 +1,4 @@
+// génére la barre de navigation et ajoute la class "active" selon la page actuelle
 export function generateHeader(currentPage) {
     const body = $("body");
 

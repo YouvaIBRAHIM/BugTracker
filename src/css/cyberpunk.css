@@ -1,4 +1,7 @@
-
+/*
+thème Cyberpunk 77 sur Codepen
+https://codepen.io/gwannon/pen/LYjvOLK
+*/
 :root {
     --glitched-duration: 0.9s;
     --glitched-long-duration: 3s;
@@ -45,6 +48,7 @@ input[type="email"].cyberpunk,
 input[type="password"].cyberpunk,
 textarea.cyberpunk,
 select.cyberpunk {
+  background-color: rgba(255, 255, 255, 0.75);
   font-size: 20px!important;
   width: calc(100% - 30px);
   border: 30px solid #000;
@@ -83,6 +87,7 @@ input[type="password"].cyberpunk {
 }
 
 textarea.cyberpunk {
+  background-color: rgba(255, 255, 255, 0.75);
   min-height: 120px;
   clip-path: polygon(
     0px 0px,

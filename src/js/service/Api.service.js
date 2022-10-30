@@ -11,9 +11,15 @@ const instance = axios.create({
   },
 });
 
+/**
+ * execute une requete de type GET
+ * @param {String} path lien de l'API
+ * @returns retourne la réponse de la requete
+ */
 async function getFromBugTrackerApi(path) {
   try {
     const response = await instance.get(path)
+    // Si la reponse de la requete indique que le token n'est pas valide, l'utilisateur est redirigé vers la page de connexion
     if (response.data.result?.message == "wrong token. Access denied") {
       logout("wrongToken");
     }
@@ -23,7 +29,12 @@ async function getFromBugTrackerApi(path) {
   }
 }
 
-
+/**
+ * execute une requete de type POST
+ * @param {String} path lien de l'API
+ * @param {String} data Données à poster
+ * @returns retourne la réponse de la requete
+ */
 async function postToBugTrackerApi(path, data) {
   try {
     const response = await instance.post(path, data)
@@ -36,12 +47,22 @@ async function postToBugTrackerApi(path, data) {
   }
 }
 
+/**
+ * lance la requete pour se connecter
+ * @param {String} username nom de l'utilisateur
+ * @param {String} password son mot de passe
+ * @returns retourne la réponse de la requete
+ */
 export async function login(username, password) {
   const loginApi = `login/${username}/${password}`;  
   
   return getFromBugTrackerApi(loginApi);
 }
 
+/**
+ * lance la requete pour se déconnecter
+ * @returns retourne la réponse de la requete
+ */
 export async function logoutFromApi() {
   const user = getFromSessionStorage("user");
   checkUserTokenExist(user);
@@ -50,12 +71,22 @@ export async function logoutFromApi() {
   return getFromBugTrackerApi(logoutApi);
 }
 
+/**
+ * lance la requete pour s'inscrire
+ * @param {String} username nom de l'utilisateur
+ * @param {String} password son mot de passe
+ * @returns retourne la réponse de la requete
+ */
 export async function signUp(username, password) {
   const signUpApi = `signup/${username}/${password}`;  
 
   return getFromBugTrackerApi(signUpApi);
 }
 
+/**
+ * 
+ * @returns retourne la liste des utilisteurs
+ */
 export async function getAllUsers() {
   const user = getFromSessionStorage("user");
   checkUserTokenExist(user);
@@ -64,6 +95,11 @@ export async function getAllUsers() {
   return getFromBugTrackerApi(usersListApi);
 }
 
+/**
+ * Si le paramètre n'est pas fourni, on récupère par défaut les bugs de l'utilisateur connecté
+ * @param {Number} userId id de l'utilisateur dont on souhaite récuèrer les bugs
+ * @returns  retourne la liste des bugs
+ */
 export async function getAllBugs(userId = null) {
   const user = getFromSessionStorage("user");
   checkUserTokenExist(user);
@@ -72,6 +108,12 @@ export async function getAllBugs(userId = null) {
   return getFromBugTrackerApi(bugsListApi);
 }
 
+/**
+ * met à jour le nouvel état du bug
+ * @param {Number} bugId id du bug
+ * @param {Number} state nouvel etat du bug
+ * @returns retourne la réponse de la requete
+ */
 export async function updateBugState(bugId, state) {
   const user = getFromSessionStorage("user");
   checkUserTokenExist(user);
@@ -81,6 +123,11 @@ export async function updateBugState(bugId, state) {
 }
 
 
+/**
+ * supprime un bug
+ * @param {Number} bugId id du bug
+ * @returns retourne la réponse de la requete
+ */
 export async function deleteBug(bugId) {
   const user = getFromSessionStorage("user");
   checkUserTokenExist(user)
@@ -89,7 +136,11 @@ export async function deleteBug(bugId) {
   return getFromBugTrackerApi(deleteApi);
 }
 
-
+/**
+ * Ajoute un nouveau bug
+ * @param {String} data objet converti en chaine de caractère contenant le titre et la description du nouveau bug
+ * @returns retourne la réponse de la requete
+ */
 export async function addBug(data) {
   const user = getFromSessionStorage("user");
   checkUserTokenExist(user)

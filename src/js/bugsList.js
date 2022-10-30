@@ -2,6 +2,7 @@ import { getAllBugs, getAllUsers, updateBugState, deleteBug } from "./service/Ap
 import moment from "../../node_modules/moment/dist/moment.js";
 import { generateHeader } from "./header.js";
 
+//récupération du nom de la page depuis le lien
 const currentPage = window.location.href.split("/").reverse()[0].split(".")[0];
 generateHeader(currentPage);
 
@@ -13,6 +14,8 @@ const searchBug = $("#searchBug");
 let bugsList = []; 
 let filtredBugsList = []; 
 let usersList = null;
+
+//récupération de la liste des utilisateurs
 const usersListFromApi = getAllUsers();
 usersListFromApi.then((res) => {
     usersList = res.data.result.user;
@@ -21,24 +24,35 @@ usersListFromApi.then((res) => {
 })
 .catch((err) => console.log(err))
 
+/**
+ * récupération des bugs
+ * @param {Array} users liste des utilisateurs
+ */
 function getAllUsersBugs(users) {
     
+    // Selon la page actuelle (bugsList ou myBugs) on récupère soit tous les bugs ou seulement ceux de l'utilisateur
     const bugs = getAllBugs(currentPage == "bugsList" ? "0" : null);
         bugs.then(bugsRes => {
         const userBugs = bugsRes.data.result.bug;
 
         if (userBugs.length > 0) {
             if (currentPage == "myBugs") {
+                // récupère seulement les bugs à traiter
                 bugsList = userBugs.filter(bug => bug.state == 0);
             }else{
                 bugsList = [...bugsList, ...userBugs] 
             }
         }
-            displayBugsList(bugsList, users);
+        displayBugsList(bugsList, users);
     })
-    .catch((bugsErr) => console.log(bugsErr))
+    .catch((bugsErr) => notie.alert({ type: 'error', text: bugsErr.message, time: 2 }))
 }
 
+/**
+ * génére la liste des bugs dans le corps de la balise Table
+ * @param {*} bugsList  liste des bugs
+ * @param {*} usersList  liste des utilisateurs
+ */
 function displayBugsList(bugsList, usersList) {
     tableBody.html("");
     allBugs.text(bugsList.length);
@@ -49,6 +63,7 @@ function displayBugsList(bugsList, usersList) {
         bugsList.reverse();
         for (let i = 0; i < bugsList.length; i++) {
             const bug = bugsList[i];
+            // calcule le nombre de bugs en cours et traités
             if (bug.state == 2) {
                 bugsDoneNb++;
             }else if(bug.state == 1){
@@ -80,7 +95,7 @@ function displayBugsList(bugsList, usersList) {
                           <label for="inProgress${bug?.id}" style="background: #ff9800;" class="stateSelect option ">En cours</label> 
 
                           <input class="selectopt" name="state${bug?.id}" type="radio" id="done${bug?.id}" ${bug?.state == 2 ? "checked" : ""} value="2"/>
-                          <label for="done${bug?.id}" style="background: #8ae66e;" class="stateSelect option ">Fait</label>
+                          <label for="done${bug?.id}" style="background: #8ae66e;" class="stateSelect option ">Traité</label>
                       </div>
                     </td>
                     <td class="deleteBtnContainer">
@@ -94,6 +109,7 @@ function displayBugsList(bugsList, usersList) {
     bugsDone.text(bugsDoneNb)
 }
 
+// au changement d'état d'un bug
 tableBody.on("change", ".select", function(event) {
     const bugId = event.target.closest('tr').dataset.bugId;
     const newState = event.target.value;
@@ -116,11 +132,13 @@ tableBody.on("change", ".select", function(event) {
     })
 })
 
+// au clic du bouton "supprimer"
 tableBody.on("click", ".deleteBtnContainer a", function(event) {
     event.preventDefault();
     const bugId = event.target.closest('tr').dataset.bugId;
-
     const bug = bugsList.find(bug => bug.id == bugId);
+
+    // demande une confirmation
     notie.confirm({ text: `Voulez-vous vraiment supprimer ce bug ? <br> <strong>( ${bug.title} )</strong>`, submitText: "CONFIRMER", cancelText: "ANNULER" }, function() {
         deleteBug(bugId)
         .then(res =>{
@@ -141,6 +159,7 @@ tableBody.on("click", ".deleteBtnContainer a", function(event) {
 
 })
 
+// à la saisie d'un caractère dans la barre de recherche
 searchBug.on("keyup", function (event) {
     const searchValue = event.target.value;
 
@@ -154,20 +173,19 @@ searchBug.on("keyup", function (event) {
         const date = moment.unix(bug?.timestamp).format("DD/MM/YYYY HH:mm:ss");
         const user = usersList[bug.user_id].toLowerCase();
 
-        if (bugTitle.includes(searchValue.toLowerCase())) {
+        // si la chaine de caracère saisie correspond avec l'un de ces éléments :
+        // * le titre du bug
+        // * la description du bug
+        // * la date création
+        // * le nom du développeur
+        // alors on récupère le bug pour l'afficher
+        if (bugTitle.includes(searchValue.toLowerCase()) ||
+            bugDescription.includes(searchValue.toLowerCase()) ||
+            date.includes(searchValue.toLowerCase()) ||
+            user.includes(searchValue.toLowerCase())
+        ) {
             return bug;
         }
-        if (bugDescription.includes(searchValue.toLowerCase())) {
-            return bug;
-        }
-
-        if (date.includes(searchValue.toLowerCase())) {
-            return bug;
-        }
-        if (user.includes(searchValue.toLowerCase())) {
-            return bug;
-        }
-
     });
 
     displayBugsList(filtredBugsList, usersList)

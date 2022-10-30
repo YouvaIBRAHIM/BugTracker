@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url("./notie.css");
 
+/* header */
 header,
 header nav ul {
     display: flex;
@@ -73,9 +74,12 @@ header .menuItem {
     max-width: 335px;
     width: auto;
 }
+
+/* message de succès et d'echec de la connexion/inscription */
 #successContainer,
 .errorMessage{
   display: none;
+  text-align: center;
 }
 
 .successMessage,
@@ -86,6 +90,7 @@ header .menuItem {
   padding: 5px 25px;
 }
 
+/* style cyberpunk personnalisé */
 .notie-button,
 .notie-button:after,
 .stateSelect,
@@ -229,12 +234,17 @@ header .menuItem {
   background: linear-gradient(45deg, transparent 3%, #00E6F6 3%, #00E6F6 5%, #8ae66e 5%);
   text-shadow: -3px -3px 0px #F8F005, 3px 3px 0px #00E6F6;
   content: 'INSCRIPTION RÉUSSIE';
+  top: 0;
+  width: 100%;
+  left: 0;
 }
 
 .errorMessage::after,
 .deleteBtnContainer a::after{
   content: 'ERREUR';
-  
+  top: 0;
+  width: 100%;
+  left: 0;
 }
 .notie-alert::after{
   content: "NOTIFICATION";
@@ -320,6 +330,7 @@ main{
     top: 20px
 }
 
+/* mode bureau */
 @media (min-width: 880px) {
   .searchBar{
     width: 50%;
@@ -343,6 +354,7 @@ main{
   }
 }
 
+/* mode tablette */
 @media (max-width: 760px) and (min-width: 550px) {
   .menuItem a{
     padding: 0px 5px;
